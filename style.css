@@ -1,0 +1,519 @@
+/* =========================
+   GLOBAL
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg: #0f172a;
+    --card: #1e293b;
+    --primary: #3b82f6;
+    --primary-hover: #2563eb;
+    --text: #ffffff;
+    --muted: #94a3b8;
+    --danger: #ef4444;
+    --ground: #334155;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow: hidden;
+    height: 100vh;
+}
+
+/* =========================
+   SCREEN SYSTEM
+========================= */
+
+.screen,
+.overlay {
+    position: fixed;
+    inset: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.screen.active {
+    display: flex;
+}
+
+.overlay.show {
+    display: flex;
+}
+
+.card {
+    width: min(90%, 500px);
+    background: var(--card);
+    border-radius: 20px;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0 10px 40px rgba(0,0,0,.35);
+}
+
+.card h1 {
+    margin-bottom: 15px;
+}
+
+.card h2 {
+    margin-top: 10px;
+}
+
+.description {
+    color: var(--muted);
+    margin-bottom: 25px;
+    line-height: 1.6;
+}
+
+.instructions {
+    margin-bottom: 25px;
+}
+
+.instructions h3 {
+    margin-bottom: 10px;
+}
+
+.instructions p {
+    color: var(--muted);
+    margin-bottom: 5px;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.primary-btn,
+.controls button {
+    border: none;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.primary-btn {
+    background: var(--primary);
+    color: white;
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.primary-btn:hover {
+    background: var(--primary-hover);
+    transform: translateY(-2px);
+}
+
+.controls button {
+    padding: 10px 14px;
+    border-radius: 10px;
+    background: var(--card);
+    color: white;
+    border: 1px solid rgba(255,255,255,.08);
+}
+
+.controls button:hover {
+    background: var(--primary);
+}
+
+/* =========================
+   GAME WRAPPER
+========================= */
+
+#gameWrapper {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* =========================
+   TOP BAR
+========================= */
+
+.top-bar {
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding: 10px;
+}
+
+.score-box {
+    background: var(--card);
+    min-width: 100px;
+    text-align: center;
+    padding: 10px;
+    border-radius: 12px;
+}
+
+.score-box span {
+    display: block;
+    color: var(--muted);
+    font-size: .8rem;
+}
+
+.score-box strong {
+    font-size: 1.2rem;
+}
+
+.controls {
+    display: flex;
+    gap: 10px;
+}
+
+/* =========================
+   GAME AREA
+========================= */
+
+#gameArea {
+    position: relative;
+    flex: 1;
+    overflow: hidden;
+}
+
+/* =========================
+   SKY
+========================= */
+
+.sky {
+    position: absolute;
+    inset: 0;
+    background:
+    linear-gradient(
+        to bottom,
+        #0f172a,
+        #111827,
+        #172554
+    );
+}
+
+/* =========================
+   GROUND
+========================= */
+
+#ground {
+    position: absolute;
+    bottom: 0;
+    width: 200%;
+    height: 90px;
+    background:
+    repeating-linear-gradient(
+        90deg,
+        #334155 0px,
+        #334155 30px,
+        #475569 30px,
+        #475569 60px
+    );
+
+    animation: groundMove 2s linear infinite;
+}
+
+@keyframes groundMove {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-60px);
+    }
+}
+
+/* =========================
+   DINO
+========================= */
+
+#dino {
+    position: absolute;
+    width: 70px;
+    height: 70px;
+
+    left: 120px;
+    bottom: 90px;
+
+    background: var(--primary);
+
+    border-radius: 12px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    box-shadow: 0 0 25px rgba(59,130,246,.5);
+
+    z-index: 10;
+}
+
+.eye {
+    width: 8px;
+    height: 8px;
+    background: white;
+    border-radius: 50%;
+    position: absolute;
+    top: 18px;
+    right: 15px;
+}
+
+#dino::before,
+#dino::after {
+    content: "";
+    position: absolute;
+    width: 12px;
+    height: 20px;
+    background: #2563eb;
+    bottom: -10px;
+    border-radius: 5px;
+}
+
+#dino::before {
+    left: 12px;
+}
+
+#dino::after {
+    right: 12px;
+}
+
+/* =========================
+   RUN ANIMATION
+========================= */
+
+.running {
+    animation: runAnim .18s infinite alternate;
+}
+
+@keyframes runAnim {
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(3px);
+    }
+}
+
+/* =========================
+   OBSTACLES
+========================= */
+
+.obstacle {
+    position: absolute;
+    width: 35px;
+    height: 70px;
+    background: #22c55e;
+
+    border-radius: 8px;
+
+    bottom: 90px;
+
+    box-shadow: 0 0 15px rgba(34,197,94,.4);
+}
+
+.obstacle::before {
+    content: "";
+    position: absolute;
+
+    width: 15px;
+    height: 25px;
+
+    background: #22c55e;
+
+    left: -10px;
+    top: 20px;
+
+    border-radius: 8px;
+}
+
+/* =========================
+   PARTICLES
+========================= */
+
+.particle {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: white;
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: .8;
+}
+
+@keyframes particlePop {
+    from {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    to {
+        opacity: 0;
+        transform: scale(0);
+    }
+}
+
+/* =========================
+   GAME OVER
+========================= */
+
+#gameOverScreen {
+    background: rgba(0,0,0,.6);
+    backdrop-filter: blur(8px);
+}
+
+.final-score {
+    margin: 20px 0;
+}
+
+/* =========================
+   PAUSE
+========================= */
+
+#pauseOverlay {
+    background: rgba(0,0,0,.5);
+    backdrop-filter: blur(5px);
+}
+
+/* =========================
+   MOBILE HINT
+========================= */
+
+#mobileHint {
+    
+    position: fixed;
+    bottom: 55px; /* above footer */
+    left: 50%;
+    transform: translateX(-50%);
+
+    background: rgba(255,255,255,0.08);
+    padding: 8px 14px;
+    border-radius: 20px;
+
+    font-size: 0.75rem;
+    color: #94a3b8;
+
+    z-index: 50;
+
+    backdrop-filter: blur(5px);
+}
+
+
+/* =========================
+   SHAKE EFFECT
+========================= */
+
+.shake {
+    animation: shake .3s;
+}
+
+@keyframes shake {
+    0% {transform: translateX(0);}
+    25% {transform: translateX(-6px);}
+    50% {transform: translateX(6px);}
+    75% {transform: translateX(-4px);}
+    100% {transform: translateX(0);}
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 768px) {
+
+    .top-bar {
+        height: auto;
+        padding: 10px;
+        gap: 8px;
+        justify-content: center;
+    }
+
+    .score-box {
+        min-width: 90px;
+        padding: 8px;
+    }
+
+    .controls {
+        width: 100%;
+        justify-content: center;
+        margin-top: 5px;
+    }
+
+    .controls button {
+        padding: 10px 15px;
+        font-size: 14px;
+    }
+
+    #gameArea {
+        padding-bottom: 60px;
+    }
+
+    #dino {
+        left: 50px;
+        width: 60px;
+        height: 60px;
+        bottom: 100px;
+    }
+
+    .obstacle {
+        width: 30px;
+        height: 60px;
+        bottom: 100px;
+    }
+
+    #mobileHint {
+        bottom: 65px;
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 500px) {
+
+    .card {
+        padding: 20px;
+    }
+
+    .card h1 {
+        font-size: 1.8rem;
+    }
+
+    .primary-btn {
+        width: 100%;
+    }
+}
+/*replace*/
+
+@media (max-width: 480px){
+
+    .score-box{
+        min-width:70px;
+    }
+
+    .score-box strong{
+        font-size:1rem;
+    }
+
+    .controls button{
+        padding:8px 12px;
+    }
+
+}
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+
+    text-align: center;
+
+    padding: 8px;
+
+    font-size: 12px;
+
+    background: rgba(15,23,42,.95);
+
+    z-index: 50;
+}

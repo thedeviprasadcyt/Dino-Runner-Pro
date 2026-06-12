@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dino Runner Pro</title>
+
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+    <!-- START SCREEN -->
+    <div id="startScreen" class="screen active">
+        <div class="card">
+            <h1>Dino🦖</h1>
+
+            <p class="description">
+                Jump over obstacles, survive as long as possible,
+                and beat your high score.
+            </p>
+
+            <div class="instructions">
+                <h3>Controls</h3>
+                <p>Desktop: Space / ↑ Arrow</p>
+                <p>Mobile: Tap Anywhere</p>
+            </div>
+
+            <button id="startBtn" class="primary-btn">
+                Start Game
+            </button>
+        </div>
+    </div>
+
+    <!-- GAME UI -->
+    <div id="gameWrapper">
+
+        <!-- TOP BAR -->
+        <header class="top-bar">
+
+            <div class="score-box">
+                <span>Score</span>
+                <strong id="score">0</strong>
+            </div>
+
+            <div class="score-box">
+                <span>Best</span>
+                <strong id="highScore">0</strong>
+            </div>
+
+            <div class="score-box">
+                <span>Level</span>
+                <strong id="level">1</strong>
+            </div>
+
+            <div class="controls">
+                <button id="pauseBtn">Pause</button>
+                <button id="soundBtn">🔊</button>
+            </div>
+
+        </header>
+
+        <!-- GAME AREA -->
+        <main id="gameArea">
+
+            <!-- SKY -->
+            <div class="sky"></div>
+
+            <!-- DINO -->
+            <div id="dino">
+                <div class="eye"></div>
+            </div>
+
+            <!-- OBSTACLES CONTAINER -->
+            <div id="obstacles"></div>
+
+            <!-- PARTICLES -->
+            <div id="particles"></div>
+
+            <!-- GROUND -->
+            <div id="ground"></div>
+
+        </main>
+
+    </div>
+
+    <!-- PAUSE OVERLAY -->
+    <div id="pauseOverlay" class="overlay">
+        <div class="card">
+            <h2>Game Paused</h2>
+
+            <button id="resumeBtn" class="primary-btn">
+                Resume
+            </button>
+        </div>
+    </div>
+
+    <!-- GAME OVER SCREEN -->
+    <div id="gameOverScreen" class="screen">
+
+        <div class="card">
+
+            <h1>Game Over 💀</h1>
+
+            <div class="final-score">
+                <p>Final Score</p>
+                <h2 id="finalScore">0</h2>
+            </div>
+
+            <div class="final-score">
+                <p>Best Score</p>
+                <h2 id="bestScoreDisplay">0</h2>
+            </div>
+
+            <button id="restartBtn" class="primary-btn">
+                Play Again
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- MOBILE TAP HINT -->
+    <div id="mobileHint">
+        Tap Anywhere To Jump
+    </div>
+
+    <!-- AUDIO -->
+    <audio id="jumpAudio"></audio>
+    <audio id="gameOverAudio"></audio>
+
+    <!-- SCRIPT -->
+    <script src="script.js"></script>
+    <footer class="footer">
+    Architect: Devicyt@2026 | All rights reserved
+</footer>
+
+</body>
+</html>
